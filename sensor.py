@@ -15,8 +15,6 @@ from homeassistant.core import callback
 __version__ = "0.0.1"
 _LOGGER = logging.getLogger(__name__)
 
-REQUIREMENTS = ["requests", "beautifulsoup4"]
-
 ICON = "mdi:gas-station"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -28,12 +26,11 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_entry(hass, config, async_add_entities):
     _LOGGER.info("async_setup_platform sensor oilprice")
-    # coordinator = MyCoordinator(hass, config)
     coordinator = hass.data[DOMAIN][config.entry_id]["coordinator"]
     await coordinator.async_config_entry_first_refresh()
     async_add_entities(
         [
-            OilPriceSensor(
+            QBittorrentSensor(
                 name=sensor_name,
                 region=config.data[CONF_REGION],
                 coordinator=coordinator,
@@ -43,7 +40,7 @@ async def async_setup_entry(hass, config, async_add_entities):
     )
 
 
-class OilPriceSensor(SensorEntity, CoordinatorEntity):
+class QBittorrentSensor(SensorEntity, CoordinatorEntity):
     _attr_has_entity_name = True
 
     def __init__(self, name: str, region: str, coordinator: MyCoordinator):
