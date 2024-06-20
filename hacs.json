@@ -1,0 +1,7 @@
+{
+    "name": "qbittorrent",
+    "render_readme": true,
+    "domain": "qbittorrent",
+    "documentation": "https://github.com/yyned2501/qbittorrent",
+    "issue_tracker": "https://github.com/yyned2501/qbittorrent/issues"
+}
