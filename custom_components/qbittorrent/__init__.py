@@ -6,7 +6,7 @@ from homeassistant.config_entries import ConfigEntry
 
 from .coordinator import MyCoordinator
 
-DOMAIN = "oilprice"
+DOMAIN = "qbittorrent"
 DEVICES = ["sensor"]
 _LOGGER = logging.getLogger(__name__)
 

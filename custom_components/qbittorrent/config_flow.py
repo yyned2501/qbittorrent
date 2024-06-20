@@ -33,7 +33,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
         if self.data:
-            return self.async_create_entry(title=self.data["region"], data=self.data)
+            return self.async_create_entry(title=self.data["ip"], data=self.data)
         return self.async_show_form(
             step_id="user",
             data_schema=setup_schema,
