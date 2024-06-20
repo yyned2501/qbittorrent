@@ -42,7 +42,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     @staticmethod
     @callback
-    def async_get_options_flow(config_entry):  # 实际上的入口函数 调佣了这个就开始了流程
+    def async_get_options_flow(config_entry):  # 实际上的入口函数 调用了这个就开始了流程
         _LOGGER.info("async_get_options_flow sensor oilprice")
         return OptionsFlowHandler(config_entry)
 

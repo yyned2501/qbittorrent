@@ -1,28 +1,32 @@
 {
   "config": {
     "error": {
-      "region": "请填写地区"
+      "region": "请填写服务器地址"
     },
     "step": {
       "user": {
-        "title": "今日油价",
-        "description": "今日油价小插件",
+        "title": "qBittorrent备用速度",
+        "description": "开启qBittorrent备用速度",
         "data": {
-          "region": "地区"
+          "ip": "服务器地址",
+          "username": "用户名",
+          "password": "密码"
         }
       }
     }
   },
   "options": {
     "error": {
-      "region": "请填写地区"
+      "region": "请填写服务器地址"
     },
     "step": {
       "init": {
-        "title": "今日油价",
-        "description": "今日油价小插件",
+        "title": "qBittorrent备用速度",
+        "description": "开启qBittorrent备用速度",
         "data": {
-          "region": "地区"
+          "ip": "服务器地址",
+          "username": "用户名",
+          "password": "密码"
         }
       }
     }

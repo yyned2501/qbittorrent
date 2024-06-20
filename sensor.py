@@ -17,7 +17,6 @@ _LOGGER = logging.getLogger(__name__)
 
 REQUIREMENTS = ["requests", "beautifulsoup4"]
 
-COMPONENT_REPO = "https://github.com/aalavender/OilPrice/"  # 原作者项目
 ICON = "mdi:gas-station"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(

@@ -7,7 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from .coordinator import MyCoordinator
 
 DOMAIN = "oilprice"
-DEVICES = ["sensor", "button"]
+DEVICES = ["sensor"]
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -34,7 +34,10 @@ async def options_update_listener(hass: HomeAssistant, config_entry: ConfigEntry
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
-            *[hass.config_entries.async_forward_entry_unload(entry, sd) for sd in DEVICES]
+            *[
+                hass.config_entries.async_forward_entry_unload(entry, sd)
+                for sd in DEVICES
+            ]
         )
     )
     # 删除设备时不用重启

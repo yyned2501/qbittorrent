@@ -1,11 +1,15 @@
 {
   "domain": "qbittorrent",
-  "name": "oilprice",
+  "name": "qbittorrent",
   "config_flow": true,
-  "version": "v1.0.2",
-  "documentation": "https://github.com/yyned2501/oilprice",
-  "issue_tracker": "https://github.com/yyned2501/oilprice/issues",
+  "version": "v0.0.1",
+  "documentation": "https://gitee.com/yyned2501/qbittorrent",
+  "issue_tracker": "https://gitee.com/yyned2501/qbittorrent/issues",
   "dependencies": [],
-  "codeowners": ["@yyned2501"],
-  "requirements": ["beautifulsoup4","lxml"]
+  "codeowners": [
+    "@yyned2501"
+  ],
+  "requirements": [
+    "requests"
+  ]
 }

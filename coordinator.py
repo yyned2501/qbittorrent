@@ -1,42 +1,48 @@
-import re, logging, datetime, aiohttp, async_timeout
+import logging, aiohttp, async_timeout
 
 from datetime import timedelta
 from homeassistant.const import CONF_REGION
 from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
-from bs4 import BeautifulSoup
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def fetch_data(region):
+async def login_qbittorrent(session: aiohttp.ClientSession, url, username, password):
+    login_url = f"{url}/api/v2/auth/login"
+    login_data = {"username": username, "password": password}
+    async with session.post(login_url, data=login_data) as response:
+        if response.status == 200:
+            _LOGGER.info("登录成功")
+            return True
+        else:
+            _LOGGER.info("登录失败")
+            return False
+
+
+async def get_speed_limits_mode(session: aiohttp.ClientSession, url):
+    speed_limits_url = f"{url}/api/v2/transfer/speedLimitsMode"
+    async with session.get(speed_limits_url) as response:
+        if response.status == 200:
+            speed_limits_mode = await response.json()
+            if speed_limits_mode:
+                _LOGGER.info("备用速度模式已启用")
+                return True
+            else:
+                _LOGGER.info("备用速度模式已禁用")
+                return False
+        else:
+            _LOGGER.info("获取备用速度状态失败")
+
+
+async def fetch_data(ip, username, password):
     _LOGGER.info("fetch_data")
     sensors = {}
-    header = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
-    }
     async with aiohttp.ClientSession() as session:
-        response = await session.get(
-            "http://www.qiyoujiage.com/" + region + ".shtml", headers=header
-        )
-    response.encoding = "utf-8"  # 不写这句会乱码
-    res = await response.text()
-
-    soup = BeautifulSoup(res, "lxml")
-    dls = soup.select("#youjia > dl")
-    sensors["next_change_date"] = (
-        soup.select("#youjiaCont > div")[1].contents[0].strip()
-    )
-    for dl in dls:
-        k = re.search("\d+", dl.select("dt")[0].text).group()
-        sensors[k] = dl.select("dd")[0].text
-    sensors["update_time"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    sensors["tips"] = soup.select("#youjiaCont > div:nth-of-type(2) > span")[
-        0
-    ].text.strip()  # 油价涨跌信息
-
+        if await login_qbittorrent(session, ip, username, password):
+            sensors["state"] = await get_speed_limits_mode(session, ip)
     return sensors
 
 
